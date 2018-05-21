@@ -6,6 +6,7 @@ namespace NHRover\Models;
 
 use NHRover\Contracts\LoggerInterface;
 use NHRover\Contracts\RoverHead;
+use NHRover\Contracts\ServoInterface;
 
 /**
  * Class Head
@@ -19,35 +20,56 @@ class Head implements RoverHead
      * @var LoggerInterface
      */
     private $log;
+    /**
+     * @var ServoInterface
+     */
+    private $panning_servo;
+    /**
+     * @var ServoInterface
+     */
+    private $tilting_servo;
 
-    function __construct(LoggerInterface $logger)
+    function __construct(LoggerInterface $logger, ServoInterface $panning_servo, ServoInterface $tilting_servo)
     {
         $this->log = $logger;
         $this->log->info("Attaching Head ...");
+        $this->panning_servo = $panning_servo;
+        $this->tilting_servo = $tilting_servo;
     }
 
     public function lookStraight()
     {
-        // TODO: Implement lookStraight() method.
+        $this->log->info("Looking straight ...");
+
+        $this->panning_servo->gotoMid();
+        $this->tilting_servo->gotoMid();
     }
 
     public function lookUp()
     {
-        // TODO: Implement lookUp() method.
+        $this->log->info("Looking up ...");
+
+        $this->tilting_servo->gotoMax();
     }
 
     public function lookDown()
     {
-        // TODO: Implement lookDown() method.
+        $this->log->info("Looking down...");
+
+        $this->tilting_servo->gotoMin();
     }
 
     public function lookLeft()
     {
-        // TODO: Implement lookLeft() method.
+        $this->log->info("Looking left ...");
+
+        $this->panning_servo->gotoMin();
     }
 
     public function lookRight()
     {
-        // TODO: Implement lookRight() method.
+        $this->log->info("Looking right ...");
+
+        $this->panning_servo->gotoMax();
     }
 }

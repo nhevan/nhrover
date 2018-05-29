@@ -50,4 +50,12 @@ class Pin implements PinInterface
     {
         $this->logger->info("Setting BCIM pin $this->bcim_pin_number value to $value ...");
     }
+
+    /**
+     * @return mixed
+     */
+    public function __toString()
+    {
+        return $this->bcim_pin_number;
+    }
 }

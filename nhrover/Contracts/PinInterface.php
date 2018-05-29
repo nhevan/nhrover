@@ -8,6 +8,10 @@ namespace NHRover\Contracts;
  * Interface PinInterface
  * @package NHRover\Contracts
  */
+/**
+ * Interface PinInterface
+ * @package NHRover\Contracts
+ */
 interface PinInterface
 {
     /**
@@ -21,4 +25,9 @@ interface PinInterface
      * @return mixed
      */
     public function setValue($value = true);
+
+    /**
+     * @return mixed
+     */
+    public function __toString();
 }

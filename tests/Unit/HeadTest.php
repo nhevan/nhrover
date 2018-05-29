@@ -4,6 +4,7 @@ namespace Test;
 
 use NHRover\Models\Head;
 use NHRover\Models\OnScreenLogger;
+use NHRover\Models\Pin;
 use NHRover\Models\Servo;
 use PHPUnit\Framework\TestCase;
 
@@ -19,7 +20,7 @@ class HeadTest extends TestCase
         $panning_servo = $this->createMock(Servo::class);
         $panning_servo->expects($this->once())->method('gotoMin');
 
-        $head = new Head(new OnScreenLogger(), $panning_servo, new Servo(18));
+        $head = new Head(new OnScreenLogger(), $panning_servo, new Servo(new Pin(18)));
 
         //act
         $head->lookLeft();
@@ -35,7 +36,7 @@ class HeadTest extends TestCase
         $panning_servo = $this->createMock(Servo::class);
         $panning_servo->expects($this->once())->method('gotoMax');
 
-        $head = new Head(new OnScreenLogger(), $panning_servo, new Servo(18));
+        $head = new Head(new OnScreenLogger(), $panning_servo, new Servo(new Pin(18)));
 
         //act
         $head->lookRight();
@@ -51,7 +52,7 @@ class HeadTest extends TestCase
         $tilting_servo = $this->createMock(Servo::class);
         $tilting_servo->expects($this->once())->method('gotoMin');
 
-        $head = new Head(new OnScreenLogger(), new Servo(19), $tilting_servo);
+        $head = new Head(new OnScreenLogger(), new Servo(new Pin(19)), $tilting_servo);
 
         //act
         $head->lookDown();
@@ -67,7 +68,7 @@ class HeadTest extends TestCase
         $tilting_servo = $this->createMock(Servo::class);
         $tilting_servo->expects($this->once())->method('gotoMax');
 
-        $head = new Head(new OnScreenLogger(), new Servo(19), $tilting_servo);
+        $head = new Head(new OnScreenLogger(), new Servo(new Pin(19)), $tilting_servo);
 
         //act
         $head->lookUp();

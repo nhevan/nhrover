@@ -4,6 +4,7 @@
 namespace NHRover\Models;
 
 
+use NHRover\Contracts\PinInterface;
 use NHRover\Contracts\ServoInterface;
 
 class Servo implements ServoInterface
@@ -11,9 +12,14 @@ class Servo implements ServoInterface
 
     private $pin;
 
-    public function __construct($pin)
+    /**
+     * Servo constructor.
+     * @param PinInterface $pin
+     */
+    public function __construct(PinInterface $pin)
     {
         $this->pin = $pin;
+        $this->pin->setMode("output");
     }
 
     /**

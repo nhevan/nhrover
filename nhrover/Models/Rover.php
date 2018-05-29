@@ -8,10 +8,24 @@ use NHRover\Contracts\LoggerInterface;
 use NHRover\Contracts\RoverBody;
 use NHRover\Contracts\RoverHead;
 
+/**
+ * Class Rover
+ * @package NHRover\Models
+ */
 class Rover
 {
+    /**
+     * @var RoverBody|Body|null
+     */
     private $body;
+    /**
+     * @var RoverHead|Head|null
+     */
     private $head;
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
 
     /**
      * Rover constructor.
@@ -20,16 +34,20 @@ class Rover
      * @param LoggerInterface $logger
      * @internal param LoggerInterface $log
      */
-    function __construct(RoverBody $body = null, RoverHead $head = null, LoggerInterface $logger)
+    function __construct(RoverBody $body, RoverHead $head, LoggerInterface $logger)
     {
-        $this->body = $body ?: new Body($logger);
-        $this->head = $head ?: new Head($logger);
+        $this->body = $body;
+        $this->head = $head;
+        $this->logger = $logger;
 
         $this->powerUp();
     }
 
+    /**
+     *
+     */
     public function powerUp()
     {
-        dump("Powering up rover ...");
+        $this->logger->info("Powering up rover ...");
     }
 }

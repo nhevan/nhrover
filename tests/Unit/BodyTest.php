@@ -84,4 +84,22 @@ class BodyTest extends TestCase
         //act
         $body->turnLeft();
     }
+    /**
+     * @test
+     * it can stop moving
+     */
+    public function it_can_stop_moving()
+    {
+        //arrange
+        $right_wheel = $this->createMock(WheelL293d::class);
+        $left_wheel = $this->createMock(WheelL293d::class);
+
+        $right_wheel->expects($this->once())->method('stop');
+        $left_wheel->expects($this->once())->method('stop');
+
+        $body = new Body(new OnScreenLogger(), $left_wheel, $right_wheel);
+
+        //act
+        $body->stop();
+    }
 }

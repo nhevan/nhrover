@@ -51,4 +51,14 @@ class WheelL293d implements WheelInterface
     {
         $this->backward_pin->setValue(true);
     }
+
+    /**
+     * Stops the rotation of the wheel
+     * @return mixed
+     */
+    public function stop()
+    {
+        $this->forward_pin->setValue(false);
+        $this->backward_pin->setValue(false);
+    }
 }

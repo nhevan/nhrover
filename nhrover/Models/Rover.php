@@ -7,12 +7,13 @@ namespace NHRover\Models;
 use NHRover\Contracts\LoggerInterface;
 use NHRover\Contracts\RoverBody;
 use NHRover\Contracts\RoverHead;
+use NHRover\Contracts\RoverInterface;
 
 /**
  * Class Rover
  * @package NHRover\Models
  */
-class Rover
+class Rover implements RoverInterface
 {
     /**
      * @var RoverBody|Body|null
@@ -46,8 +47,18 @@ class Rover
     /**
      *
      */
-    public function powerUp()
+    private function powerUp()
     {
         $this->logger->info("Powering up rover ...");
+    }
+
+    public function stepAhead($steps = 1)
+    {
+
+    }
+
+    public function stepBack($steps = 1)
+    {
+        // TODO: Implement stepBack() method.
     }
 }

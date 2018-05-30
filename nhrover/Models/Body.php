@@ -68,4 +68,12 @@ class Body implements RoverBody
         $this->left_side->rotateCCW();
         $this->right_side->rotateCW();
     }
+
+    public function stop()
+    {
+        $this->log->info("Stopping all motor movements ...");
+
+        $this->left_side->stop();
+        $this->right_side->stop();
+    }
 }

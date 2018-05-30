@@ -164,7 +164,7 @@ class Rover implements RoverInterface
     }
 
     /**
-     *
+     * Takes the rover to a test drive where it checks both body and head functionalities
      */
     public function testDrive()
     {
@@ -174,5 +174,19 @@ class Rover implements RoverInterface
         $this->turnRight(2);
         usleep(100000);
         $this->stepAhead();
+        $this->testHead();
+    }
+
+    /**
+     * Tests the head pan and tilt functionality
+     */
+    public function testHead()
+    {
+        $this->head->lookRight();
+        $this->head->lookLeft();
+        $this->head->lookUp();
+        $this->head->lookRight();
+        $this->head->lookDown();
+        $this->head->lookStraight();
     }
 }

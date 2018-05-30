@@ -82,14 +82,14 @@ class Rover implements RoverInterface
     {
         $this->logger->info("Initiating turn left command ...");
         $this->body->turnLeft();
-        usleep(500);
+        usleep(500000);
         $this->body->stop();
     }
 
     public function turnRight($steps = 1){
         $this->logger->info("Initiating turn right command ...");
         $this->body->turnRight();
-        usleep(500);
+        usleep(500000);
         $this->body->stop();
     }
 
@@ -98,6 +98,6 @@ class Rover implements RoverInterface
         $this->stepAhead();
         $this->stepAhead();
         $this->stepBack();
-        $this->turnRight()
+        $this->turnRight();
     }
 }

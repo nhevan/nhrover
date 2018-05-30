@@ -67,6 +67,6 @@ class Pin implements PinInterface
      */
     public function __toString()
     {
-        return $this->bcim_pin_number;
+        return (string) $this->bcim_pin_number;
     }
 }

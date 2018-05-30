@@ -27,7 +27,7 @@ class Servo implements ServoInterface
      */
     public function gotoMax()
     {
-        exec("sudo python3 nhrover/scripts/servo.py $this->pin 1");
+        exec("sudo python3 nhrover/scripts/servo.py $this->pin -1");
     }
 
     /**
@@ -35,7 +35,7 @@ class Servo implements ServoInterface
      */
     public function gotoMin()
     {
-        exec("sudo python3 nhrover/scripts/servo.py $this->pin -1");
+        exec("sudo python3 nhrover/scripts/servo.py $this->pin 1");
     }
 
     /**

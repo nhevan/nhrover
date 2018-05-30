@@ -58,10 +58,14 @@ class Rover implements RoverInterface
      */
     public function stepAhead($steps = 1)
     {
-        $this->logger->info("Initiating Stepping ahead ...");
-        $this->body->moveForward();
-        sleep(1);
-        $this->body->stop();
+        while ($steps) {
+            $this->logger->info("Initiating Stepping ahead ...");
+            $this->body->moveForward();
+            sleep(1);
+            $this->body->stop();
+
+            $steps--;
+        }
     }
 
     /**
@@ -69,10 +73,14 @@ class Rover implements RoverInterface
      */
     public function stepBack($steps = 1)
     {
-        $this->logger->info("Initiating Stepping back ...");
-        $this->body->moveBackward();
-        sleep(1);
-        $this->body->stop();
+        while ($steps) {
+            $this->logger->info("Initiating Stepping back ...");
+            $this->body->moveBackward();
+            sleep(1);
+            $this->body->stop();
+
+            $steps--;
+        }
     }
 
     /**
@@ -80,49 +88,91 @@ class Rover implements RoverInterface
      */
     public function turnLeft($steps = 1)
     {
-        $this->logger->info("Initiating turn left command ...");
-        $this->body->turnLeft();
-        usleep(400000);
-        $this->body->stop();
+        while ($steps) {
+            $this->logger->info("Initiating turn left command ...");
+            $this->body->turnLeft();
+            usleep(400000);
+            $this->body->stop();
+
+            $steps--;
+        }
     }
 
-    public function turnRight($steps = 1){
-        $this->logger->info("Initiating turn right command ...");
-        $this->body->turnRight();
-        usleep(400000);
-        $this->body->stop();
+    /**
+     * @param int $steps
+     */
+    public function turnRight($steps = 1)
+    {
+        while ($steps) {
+            $this->logger->info("Initiating turn right command ...");
+            $this->body->turnRight();
+            usleep(400000);
+            $this->body->stop();
+
+            $steps--;
+        }
     }
 
-    public function lookRight(){
+    /**
+     *
+     */
+    public function lookRight()
+    {
         $this->logger->info("Looking right ...");
 
         $this->head->lookRight();
     }
-    public function lookLeft(){
+
+    /**
+     *
+     */
+    public function lookLeft()
+    {
         $this->logger->info("Looking left ...");
 
         $this->head->lookLeft();
     }
-    public function lookUp(){
+
+    /**
+     *
+     */
+    public function lookUp()
+    {
         $this->logger->info("Looking up ...");
 
         $this->head->lookUp();
     }
-    public function lookDown(){
+
+    /**
+     *
+     */
+    public function lookDown()
+    {
         $this->logger->info("Looking down ...");
 
         $this->head->lookDown();
     }
-    public function lookStraight(){
+
+    /**
+     *
+     */
+    public function lookStraight()
+    {
         $this->logger->info("Looking straight ...");
 
         $this->head->lookStraight();
     }
-    public function testDrive(){
+
+    /**
+     *
+     */
+    public function testDrive()
+    {
         $this->logger->info("Initiating a test drive ...");
+        $this->stepAhead(2);
+        usleep(100000);
+        $this->turnRight(2);
+        usleep(100000);
         $this->stepAhead();
-        $this->stepAhead();
-        $this->stepBack();
-        $this->turnRight();
     }
 }

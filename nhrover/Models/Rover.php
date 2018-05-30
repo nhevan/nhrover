@@ -82,17 +82,42 @@ class Rover implements RoverInterface
     {
         $this->logger->info("Initiating turn left command ...");
         $this->body->turnLeft();
-        usleep(500000);
+        usleep(400000);
         $this->body->stop();
     }
 
     public function turnRight($steps = 1){
         $this->logger->info("Initiating turn right command ...");
         $this->body->turnRight();
-        usleep(500000);
+        usleep(400000);
         $this->body->stop();
     }
 
+    public function lookRight(){
+        $this->logger->info("Looking right ...");
+
+        $this->head->lookRight();
+    }
+    public function lookLeft(){
+        $this->logger->info("Looking left ...");
+
+        $this->head->lookLeft();
+    }
+    public function lookUp(){
+        $this->logger->info("Looking up ...");
+
+        $this->head->lookUp();
+    }
+    public function lookDown(){
+        $this->logger->info("Looking down ...");
+
+        $this->head->lookDown();
+    }
+    public function lookStraight(){
+        $this->logger->info("Looking straight ...");
+
+        $this->head->lookStraight();
+    }
     public function testDrive(){
         $this->logger->info("Initiating a test drive ...");
         $this->stepAhead();

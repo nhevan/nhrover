@@ -6,6 +6,7 @@ namespace NHRover\Models;
 
 use NHRover\Contracts\LoggerInterface;
 use NHRover\Contracts\PinInterface;
+use PiPHP\GPIO\GPIO;
 
 /**
  * Class Pin
@@ -21,6 +22,11 @@ class Pin implements PinInterface
      * @var
      */
     private $bcim_pin_number;
+
+    /**
+     * @var \PiPHP\GPIO\Pin\OutputPin|\PiPHP\GPIO\Pin\OutputPinInterface
+     */
+    private $pin;
 
     /**
      * Pin constructor.
@@ -40,6 +46,9 @@ class Pin implements PinInterface
     public function setMode($mode = 'output')
     {
         $this->logger->info("Setting BCIM pin $this->bcim_pin_number mode to $mode ...");
+
+        $gpio = new GPIO();
+        $this->pin = $gpio->getOutputPin($this->bcim_pin_number);
     }
 
     /**
@@ -49,6 +58,8 @@ class Pin implements PinInterface
     public function setValue($value = true)
     {
         $this->logger->info("Setting BCIM pin $this->bcim_pin_number value to $value ...");
+
+        $this->pin->setValue($value);
     }
 
     /**

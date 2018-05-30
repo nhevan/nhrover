@@ -12,5 +12,8 @@
   "require-dev": {
     "phpunit/phpunit": "^6.5",
     "symfony/var-dumper": "^3.4"
+  },
+  "require": {
+    "piphp/gpio": "^0.3.3"
   }
 }

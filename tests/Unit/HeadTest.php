@@ -20,7 +20,9 @@ class HeadTest extends TestCase
         $panning_servo = $this->createMock(Servo::class);
         $panning_servo->expects($this->once())->method('gotoMin');
 
-        $head = new Head(new OnScreenLogger(), $panning_servo, new Servo(new Pin(18)));
+        $tilting_servo = $this->createMock(Servo::class);
+
+        $head = new Head(new OnScreenLogger(), $panning_servo, $tilting_servo);
 
         //act
         $head->lookLeft();
@@ -36,7 +38,9 @@ class HeadTest extends TestCase
         $panning_servo = $this->createMock(Servo::class);
         $panning_servo->expects($this->once())->method('gotoMax');
 
-        $head = new Head(new OnScreenLogger(), $panning_servo, new Servo(new Pin(18)));
+        $tilting_servo = $this->createMock(Servo::class);
+
+        $head = new Head(new OnScreenLogger(), $panning_servo, $tilting_servo);
 
         //act
         $head->lookRight();
@@ -52,7 +56,8 @@ class HeadTest extends TestCase
         $tilting_servo = $this->createMock(Servo::class);
         $tilting_servo->expects($this->once())->method('gotoMin');
 
-        $head = new Head(new OnScreenLogger(), new Servo(new Pin(19)), $tilting_servo);
+        $panning_servo = $this->createMock(Servo::class);
+        $head = new Head(new OnScreenLogger(), $panning_servo, $tilting_servo);
 
         //act
         $head->lookDown();
@@ -68,7 +73,8 @@ class HeadTest extends TestCase
         $tilting_servo = $this->createMock(Servo::class);
         $tilting_servo->expects($this->once())->method('gotoMax');
 
-        $head = new Head(new OnScreenLogger(), new Servo(new Pin(19)), $tilting_servo);
+        $panning_servo = $this->createMock(Servo::class);
+        $head = new Head(new OnScreenLogger(), $panning_servo, $tilting_servo);
 
         //act
         $head->lookUp();

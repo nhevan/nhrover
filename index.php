@@ -13,8 +13,8 @@ require "bootstrap.php";
 $logger = new OnScreenLogger();
 $body = new Body(
             $logger,
-            new WheelL293d(new Pin(1),new Pin(2)),
-            new WheelL293d(new Pin(3),new Pin(4))
+            new WheelL293d(new Pin(23),new Pin(24)),
+            new WheelL293d(new Pin(17),new Pin(27))
         );
 $head = new Head(
             $logger,

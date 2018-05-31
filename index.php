@@ -18,8 +18,8 @@ $body = new Body(
         );
 $head = new Head(
             $logger,
-            new Servo(new Pin(5)),
-            new Servo(new Pin(6))
+            new Servo(new Pin(18)),
+            new Servo(new Pin(4))
         );
 $nhrover = new Rover($body, $head, $logger);
 

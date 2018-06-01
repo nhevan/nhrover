@@ -1,8 +1,8 @@
 <?php
 
 return [
-    '106' => 'Up',
-    '107' => 'Down',
+    '106' => 'Forward',
+    '107' => 'Backward',
     '104' => 'Left',
     '108' => 'Right',
 ];

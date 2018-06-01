@@ -76,7 +76,7 @@ class Rover implements RoverInterface
         while ($steps) {
             $this->logger->info("Initiating Stepping back ...");
             $this->body->moveBackward();
-            sleep(1);
+            usleep(100000);
             $this->body->stop();
 
             $steps--;
@@ -91,7 +91,7 @@ class Rover implements RoverInterface
         while ($steps) {
             $this->logger->info("Initiating turn left command ...");
             $this->body->turnLeft();
-            usleep(400000);
+            usleep(100000);
             $this->body->stop();
 
             $steps--;
@@ -106,7 +106,7 @@ class Rover implements RoverInterface
         while ($steps) {
             $this->logger->info("Initiating turn right command ...");
             $this->body->turnRight();
-            usleep(400000);
+            usleep(100000);
             $this->body->stop();
 
             $steps--;
@@ -163,6 +163,26 @@ class Rover implements RoverInterface
         $this->head->lookStraight();
     }
 
+    public function drive(){
+        $mappings = require __DIR__."/keyboard_mapping.php";
+
+        system('stty cbreak -echo');
+        $stdin = fopen('php://stdin', 'r');
+
+        while (true) {
+            $c = ord(fgetc($stdin));
+
+            if (isset($mappings[$c])) {
+                $mapping = $mappings[$c];
+
+                if ($mapping == "Forward") $this->stepAhead();
+                if ($mapping == "Backward") $this->stepBack();
+                if ($mapping == "Left") $this->turnLeft();
+                if ($mapping == "Right") $this->turnRight();
+            }
+        }
+    }
+
     /**
      * Takes the rover to a test drive where it checks both body and head functionalities
      */
@@ -183,10 +203,15 @@ class Rover implements RoverInterface
     public function testHead()
     {
         $this->head->lookRight();
+        usleep(500000);
         $this->head->lookLeft();
+        usleep(500000);
         $this->head->lookUp();
+        usleep(500000);
         $this->head->lookRight();
+        usleep(500000);
         $this->head->lookDown();
+        usleep(500000);
         $this->head->lookStraight();
     }
 }

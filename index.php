@@ -10,7 +10,6 @@ use NHRover\Models\WheelL293d;
 
 require "bootstrap.php";
 
-$mappings = require "keyboard_mapping.php";
 $logger = new OnScreenLogger();
 $body = new Body(
             $logger,
@@ -24,18 +23,6 @@ $head = new Head(
         );
 $nhrover = new Rover($body, $head, $logger);
 
-system('stty cbreak -echo');
-$stdin = fopen('php://stdin', 'r');
-
-while (true) {
-    $c = ord(fgetc($stdin));
-    //echo "Char read: $c\n";
-
-    if (isset($mappings[$c])) {
-        $mapping = $mappings[$c];
-        if ($mapping == "Up") $nhrover->stepAhead();
-        //$this->snakes[$mapping[1]]->setDirection($mapping[0]);
-    }
-}
+$nhrover->drive();
 
 return $nhrover;

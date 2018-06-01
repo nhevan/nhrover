@@ -61,7 +61,7 @@ class Rover implements RoverInterface
         while ($steps) {
             $this->logger->info("Initiating Stepping ahead ...");
             $this->body->moveForward();
-            sleep(1);
+            usleep(100000);
             $this->body->stop();
 
             $steps--;

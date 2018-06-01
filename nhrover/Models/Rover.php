@@ -164,7 +164,7 @@ class Rover implements RoverInterface
     }
 
     public function drive(){
-        $mappings = require __DIR__."/keyboard_mapping.php";
+        $mappings = require __DIR__."/../../keyboard_mapping.php";
 
         system('stty cbreak -echo');
         $stdin = fopen('php://stdin', 'r');
@@ -179,6 +179,12 @@ class Rover implements RoverInterface
                 if ($mapping == "Backward") $this->stepBack();
                 if ($mapping == "Left") $this->turnLeft();
                 if ($mapping == "Right") $this->turnRight();
+
+                if ($mapping == "lookLeft") $this->lookLeft();
+                if ($mapping == "lookRight") $this->lookRight();
+                if ($mapping == "lookUp") $this->lookUp();
+                if ($mapping == "lookDown") $this->lookDown();
+                if ($mapping == "lookStraight") $this->lookStraight();
             }
         }
     }

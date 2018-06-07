@@ -15,12 +15,13 @@ $body = new Body(
             $logger,
             new WheelL293d(new Pin(11),new Pin(5)),
             new WheelL293d(new Pin(6),new Pin(13)),
-            new Pin(2)
+            new Pin(2, $logger)
         );
 $head = new Head(
             $logger,
             new Servo(new Pin(18)),
-            new Servo(new Pin(4))
+            new Servo(new Pin(4)),
+            new Pin(4, $logger)
         );
 $nhrover = new Rover($body, $head, $logger);
 

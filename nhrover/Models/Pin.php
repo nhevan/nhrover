@@ -52,14 +52,23 @@ class Pin implements PinInterface
     }
 
     /**
-     * @param bool $value
+     * @param bool|int $value
      * @return mixed
      */
-    public function setValue($value = true)
+    public function setValue($value = 1)
     {
         $this->logger->info("Setting BCIM pin $this->bcim_pin_number value to $value ...");
 
         $this->pin->setValue($value);
+    }
+
+    /**
+     * @return int
+     */
+    public function getValue(){
+        $this->logger->info("Getting value of BCIM pin $this->bcim_pin_number ...");
+
+        return $this->pin->getValue();
     }
 
     /**

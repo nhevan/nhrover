@@ -11,4 +11,5 @@ interface RoverHead
     public function lookDown();
     public function lookLeft();
     public function lookRight();
+    public function toggleHeadlight();
 }

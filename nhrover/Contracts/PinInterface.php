@@ -24,7 +24,12 @@ interface PinInterface
      * @param bool $value
      * @return mixed
      */
-    public function setValue($value = true);
+    public function setValue($value = 1);
+
+    /**
+     * @return mixed
+     */
+    public function getValue();
 
     /**
      * @return mixed

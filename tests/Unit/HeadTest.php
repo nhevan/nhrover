@@ -20,9 +20,11 @@ class HeadTest extends TestCase
         $panning_servo = $this->createMock(Servo::class);
         $panning_servo->expects($this->once())->method('gotoMin');
 
+        $headlight = $this->createMock(Pin::class);
+
         $tilting_servo = $this->createMock(Servo::class);
 
-        $head = new Head(new OnScreenLogger(), $panning_servo, $tilting_servo);
+        $head = new Head(new OnScreenLogger(), $panning_servo, $tilting_servo, $headlight);
 
         //act
         $head->lookLeft();
@@ -37,10 +39,11 @@ class HeadTest extends TestCase
         //arrange
         $panning_servo = $this->createMock(Servo::class);
         $panning_servo->expects($this->once())->method('gotoMax');
+        $headlight = $this->createMock(Pin::class);
 
         $tilting_servo = $this->createMock(Servo::class);
 
-        $head = new Head(new OnScreenLogger(), $panning_servo, $tilting_servo);
+        $head = new Head(new OnScreenLogger(), $panning_servo, $tilting_servo, $headlight);
 
         //act
         $head->lookRight();
@@ -55,9 +58,10 @@ class HeadTest extends TestCase
         //arrange
         $tilting_servo = $this->createMock(Servo::class);
         $tilting_servo->expects($this->once())->method('gotoMin');
+        $headlight = $this->createMock(Pin::class);
 
         $panning_servo = $this->createMock(Servo::class);
-        $head = new Head(new OnScreenLogger(), $panning_servo, $tilting_servo);
+        $head = new Head(new OnScreenLogger(), $panning_servo, $tilting_servo, $headlight);
 
         //act
         $head->lookDown();
@@ -72,9 +76,10 @@ class HeadTest extends TestCase
         //arrange
         $tilting_servo = $this->createMock(Servo::class);
         $tilting_servo->expects($this->once())->method('gotoMax');
+        $headlight = $this->createMock(Pin::class);
 
         $panning_servo = $this->createMock(Servo::class);
-        $head = new Head(new OnScreenLogger(), $panning_servo, $tilting_servo);
+        $head = new Head(new OnScreenLogger(), $panning_servo, $tilting_servo, $headlight);
 
         //act
         $head->lookUp();
@@ -89,13 +94,32 @@ class HeadTest extends TestCase
         //arrange
         $tilting_servo = $this->createMock(Servo::class);
         $tilting_servo->expects($this->once())->method('gotoMid');
+        $headlight = $this->createMock(Pin::class);
 
         $panning_servo = $this->createMock(Servo::class);
         $panning_servo->expects($this->once())->method('gotoMid');
 
-        $head = new Head(new OnScreenLogger(), $panning_servo, $tilting_servo);
+        $head = new Head(new OnScreenLogger(), $panning_servo, $tilting_servo, $headlight);
 
         //act
         $head->lookStraight();
+    }
+
+    /**
+     * @test
+     * it can toggle its headlight
+     */
+    public function it_can_toggle_its_headlight()
+    {
+        //arrange
+        $tilting_servo = $this->createMock(Servo::class);
+        $panning_servo = $this->createMock(Servo::class);
+
+        $headlight = $this->createMock(Pin::class);
+        $head = new Head(new OnScreenLogger(), $panning_servo, $tilting_servo, $headlight);
+
+        //act
+        $headlight->expects($this->once())->method('setValue')->with(1);
+        $head->toggleHeadlight();
     }
 }

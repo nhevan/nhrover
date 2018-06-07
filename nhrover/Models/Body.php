@@ -5,6 +5,7 @@ namespace NHRover\Models;
 
 
 use NHRover\Contracts\LoggerInterface;
+use NHRover\Contracts\PinInterface;
 use NHRover\Contracts\RoverBody;
 use NHRover\Contracts\WheelInterface;
 
@@ -27,14 +28,19 @@ class Body implements RoverBody
      * @var WheelInterface
      */
     private $right_side;
+    /**
+     * @var PinInterface
+     */
+    private $motor_power;
 
-    function __construct(LoggerInterface $logger, WheelInterface $left_wheel, WheelInterface $right_wheel)
+    function __construct(LoggerInterface $logger, WheelInterface $left_wheel, WheelInterface $right_wheel, PinInterface $motor_power)
     {
         $this->log = $logger;
         $this->log->info("Attaching Body ...");
 
         $this->left_side = $left_wheel;
         $this->right_side = $right_wheel;
+        $this->motor_power = $motor_power;
     }
 
     public function moveForward()
@@ -75,5 +81,21 @@ class Body implements RoverBody
 
         $this->left_side->stop();
         $this->right_side->stop();
+    }
+
+    /**
+     * Turns on the motor controller board
+     */
+    public function powerUp()
+    {
+        $this->motor_power->setValue(1);
+    }
+
+    /**
+     * Cuts the power to motor controller board
+     */
+    public function powerDown()
+    {
+        $this->motor_power->setValue(0);
     }
 }

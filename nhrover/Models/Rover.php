@@ -47,9 +47,11 @@ class Rover implements RoverInterface
     /**
      *
      */
-    private function powerUp()
+    public function powerUp()
     {
         $this->logger->info("Powering up rover ...");
+
+        $this->body->powerUp();
     }
 
     /**

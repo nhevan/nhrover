@@ -41,6 +41,7 @@ class Body implements RoverBody
         $this->left_side = $left_wheel;
         $this->right_side = $right_wheel;
         $this->motor_power = $motor_power;
+        $this->motor_power->setMode('output');
     }
 
     public function moveForward()

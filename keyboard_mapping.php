@@ -10,4 +10,5 @@ return [
     '119' => 'lookUp',
     '120' => 'lookDown',
     '115' => 'lookStraight',
+    '98' => 'toggleHeadlight',
 ];

@@ -45,6 +45,7 @@ class Head implements RoverHead
         $this->panning_servo = $panning_servo;
         $this->tilting_servo = $tilting_servo;
         $this->headlight = $headlight;
+        $this->headlight->setMode('output');
     }
 
     public function lookStraight()

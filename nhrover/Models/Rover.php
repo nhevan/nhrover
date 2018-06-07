@@ -187,6 +187,8 @@ class Rover implements RoverInterface
                 if ($mapping == "lookUp") $this->lookUp();
                 if ($mapping == "lookDown") $this->lookDown();
                 if ($mapping == "lookStraight") $this->lookStraight();
+
+                if ($mapping == "toggleHeadlight") $this->head->toggleHeadlight();
             }
         }
     }

@@ -11,4 +11,5 @@ return [
     '120' => 'lookDown',
     '115' => 'lookStraight',
     '98' => 'toggleHeadlight',
+    '112' => 'park',
 ];

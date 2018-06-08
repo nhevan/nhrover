@@ -54,6 +54,14 @@ class Rover implements RoverInterface
         $this->body->powerUp();
     }
 
+    public function park(){
+        $this->logger->info("Powering off rover ...");
+        $this->body->powerDown();
+
+        $this->logger->info("Parking Complete ....");
+        exit();
+    }
+
     /**
      * The rover moves forward for x seconds and stops
      * @param int $steps
@@ -189,6 +197,7 @@ class Rover implements RoverInterface
                 if ($mapping == "lookStraight") $this->lookStraight();
 
                 if ($mapping == "toggleHeadlight") $this->head->toggleHeadlight();
+                if ($mapping == "park") $this->park();
             }
         }
     }

@@ -9,6 +9,8 @@ use NHRover\Contracts\LoggerInterface;
 class OnScreenLogger implements LoggerInterface
 {
     public $info_color = "[01;36m";
+    public $warning_color = "[01;33m";
+    public $critical_color = "[01;36m";
     public $reset_color = "[0m";
     public $verbosity = 1;
 
@@ -37,13 +39,13 @@ class OnScreenLogger implements LoggerInterface
             return $this->info($message);
     }
 
-    public function warning()
+    public function warning($message = "Please have a look at this...")
     {
-        // TODO: Implement warning() method.
+        echo $this->colorize($message, $this->warning_color) . "\n";
     }
 
-    public function critical()
+    public function critical($message = "A critical error might be breeding here ")
     {
-        // TODO: Implement critical() method.
+        echo $this->colorize($message, $this->critical_color) . "\n";
     }
 }

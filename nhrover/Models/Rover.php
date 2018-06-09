@@ -55,9 +55,12 @@ class Rover implements RoverInterface
     }
 
     public function park(){
+        $this->head->turnOffHeadlight();
+
         $this->logger->info("Powering off rover ...");
         $this->body->powerDown();
-        $this->head->turnOffHeadlight();
+
+        $this->logger->warning("Should try to power of all external peripherals and enter a power saving mode.");
 
         $this->logger->info("Parking Complete ....");
         exit();

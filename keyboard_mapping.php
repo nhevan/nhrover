@@ -1,8 +1,8 @@
 <?php
 
 return [
-    '106' => 'Forward',
-    '107' => 'Backward',
+    '106' => 'Backward',
+    '107' => 'Forward',
     '104' => 'Left',
     '108' => 'Right',
     '97' => 'lookLeft',

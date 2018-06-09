@@ -45,7 +45,7 @@ class Pin implements PinInterface
      */
     public function setMode($mode = 'output')
     {
-        $this->logger->info("Setting BCIM pin $this->bcim_pin_number mode to $mode ...");
+        $this->logger->dump("Setting BCIM pin $this->bcim_pin_number mode to $mode ...");
 
         $gpio = new GPIO();
         $this->pin = $gpio->getOutputPin($this->bcim_pin_number);
@@ -57,7 +57,7 @@ class Pin implements PinInterface
      */
     public function setValue($value = 1)
     {
-        $this->logger->info("Setting BCIM pin $this->bcim_pin_number value to $value ...");
+        $this->logger->dump("Setting BCIM pin $this->bcim_pin_number value to $value ...");
 
         $this->pin->setValue($value);
     }
@@ -66,7 +66,7 @@ class Pin implements PinInterface
      * @return int
      */
     public function getValue(){
-        $this->logger->info("Getting value of BCIM pin $this->bcim_pin_number ...");
+        $this->logger->dump("Getting value of BCIM pin $this->bcim_pin_number ...");
 
         return $this->pin->getValue();
     }

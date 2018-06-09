@@ -78,7 +78,7 @@ class Body implements RoverBody
 
     public function stop()
     {
-        $this->log->info("Stopping all motor movements ...");
+        $this->log->dump("Stopping all motor movements ...");
 
         $this->left_side->stop();
         $this->right_side->stop();

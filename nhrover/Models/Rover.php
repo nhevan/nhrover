@@ -70,7 +70,7 @@ class Rover implements RoverInterface
     public function stepAhead($steps = 1)
     {
         while ($steps) {
-            $this->logger->info("Initiating Stepping ahead ...");
+            $this->logger->dump("Initiating Stepping ahead ...");
             $this->body->moveForward();
             usleep(100000);
             $this->body->stop();
@@ -85,7 +85,7 @@ class Rover implements RoverInterface
     public function stepBack($steps = 1)
     {
         while ($steps) {
-            $this->logger->info("Initiating Stepping back ...");
+            $this->logger->dump("Initiating Stepping back ...");
             $this->body->moveBackward();
             usleep(100000);
             $this->body->stop();
@@ -100,7 +100,7 @@ class Rover implements RoverInterface
     public function turnLeft($steps = 1)
     {
         while ($steps) {
-            $this->logger->info("Initiating turn left command ...");
+            $this->logger->dump("Initiating turn left command ...");
             $this->body->turnLeft();
             usleep(100000);
             $this->body->stop();
@@ -115,7 +115,7 @@ class Rover implements RoverInterface
     public function turnRight($steps = 1)
     {
         while ($steps) {
-            $this->logger->info("Initiating turn right command ...");
+            $this->logger->dump("Initiating turn right command ...");
             $this->body->turnRight();
             usleep(100000);
             $this->body->stop();

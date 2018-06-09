@@ -51,46 +51,50 @@ class Head implements RoverHead
 
     public function lookStraight()
     {
-        $this->log->info("Looking straight ...");
+        $this->log->dump("Setting mid position for both pan and tilt options ...");
 
         $this->panning_servo->gotoMid();
     }
 
     public function lookUp()
     {
-        $this->log->info("Looking up ...");
+        $this->log->dump("Tilting up");
 
         $this->tilting_motor->tiltUp();
     }
 
     public function lookDown()
     {
-        $this->log->info("Looking down...");
+        $this->log->dump("Tilting down...");
 
         $this->tilting_motor->tiltDown();
     }
 
     public function lookLeft()
     {
-        $this->log->info("Looking left ...");
+        $this->log->dump("Panning to min ...");
 
         $this->panning_servo->gotoMin();
     }
 
     public function lookRight()
     {
-        $this->log->info("Looking right ...");
+        $this->log->dump("Panning to max ...");
 
         $this->panning_servo->gotoMax();
     }
 
     public function turnOnHeadlight()
     {
+       $this->log->info("Turning ON Headlight ...") ;
+
         return $this->headlight->setValue(1);
     }
 
     public function turnOffHeadlight()
     {
+        $this->log->info("Turning OFF Headlight ...") ;
+
         return $this->headlight->setValue(0);
     }
 

@@ -3,12 +3,10 @@
 
 namespace NHRover\Models;
 
-use PiPHP\GPIO\GPIO;
-use PiPHP\GPIO\Pin\PinInterface;
+use NHRover\Contracts\PinInterface;
 
 class Stepper
 {
-    protected $gpio;
     protected $motor_switch;
     protected $input_1; // orange
     protected $input_2; // yellow
@@ -21,24 +19,82 @@ class Stepper
     protected $delay = 1000; //in micro second
     protected $phase_sequence;
 
-    public function __construct($gpio = null)
-    {
-        $this->gpio = $gpio ? $gpio : new GPIO;
+    public function __construct(
+        PinInterface $motor_switch,
+        PinInterface $input_1,
+        PinInterface $input_2,
+        PinInterface $input_3,
+        PinInterface $input_4
+    ) {
+        $this->motor_switch = $motor_switch;
+        $this->input_1 = $input_1;
+        $this->input_2 = $input_2;
+        $this->input_3 = $input_3;
+        $this->input_4 = $input_4;
+
         $this->phase_sequence = $this->setPhaseSequences();
         $this->setupPins();
     }
 
     /**
+     * prepares the set sequence for the stepper motor 28BYJ48
+     */
+    protected function setPhaseSequences()
+    {
+        $phase_sequence = [];
+        $phase_sequence[0] = [0, 1, 0, 0];
+        $phase_sequence[1] = [0, 1, 0, 1];
+        $phase_sequence[2] = [0, 0, 0, 1];
+        $phase_sequence[3] = [1, 0, 0, 1];
+        $phase_sequence[4] = [1, 0, 0, 0];
+        $phase_sequence[5] = [1, 0, 1, 0];
+        $phase_sequence[6] = [0, 0, 1, 0];
+        $phase_sequence[7] = [0, 1, 1, 0];
+
+        return $phase_sequence;
+    }
+
+    /**
      * sets up all the necessary pins required to control the motor
-     * @return [type] [description]
      */
     protected function setupPins()
     {
-        $this->motor_switch = $this->gpio->getOutputPin(18);
-        $this->input_1 = $this->gpio->getOutputPin(5);
-        $this->input_2 = $this->gpio->getOutputPin(6);
-        $this->input_3 = $this->gpio->getOutputPin(19);
-        $this->input_4 = $this->gpio->getOutputPin(26);
+        $this->motor_switch->setMode("output");
+        $this->input_1->setMode("output");
+        $this->input_2->setMode("output");
+        $this->input_3->setMode("output");
+        $this->input_4->setMode("output");
+    }
+
+    /**
+     * rotates the motor clock wise
+     */
+    public function rotateClockwise()
+    {
+        $this->turnOnMotor();
+        for ($step = 0; $step < $this->getStepsToMove(); $step++) {
+            for ($local_step_count = 0; $local_step_count <= $this->step_count; $local_step_count++) {
+                $this->moveStep($this->phase_sequence[$this->current_phase][0],
+                    $this->phase_sequence[$this->current_phase][1], $this->phase_sequence[$this->current_phase][2],
+                    $this->phase_sequence[$this->current_phase][3]);
+
+                $this->current_phase -= 1;
+                if ($this->current_phase < 0) {
+                    $this->current_phase = 7;
+                }
+                usleep($this->delay);
+            }
+        }
+        $this->turnOffMotor();
+    }
+
+    /**
+     * turns On the motor
+     */
+    protected function turnOnMotor()
+    {
+        // echo "Turning On Motor";
+        $this->motor_switch->setValue(1);
     }
 
     /**
@@ -62,32 +118,15 @@ class Stepper
     }
 
     /**
-     * turns On the motor
-     * @return [type] [description]
-     */
-    protected function turnOnMotor()
-    {
-        // echo "Turning On Motor";
-        $this->motor_switch->setValue(PinInterface::VALUE_HIGH);
-    }
-
-    /**
-     * turns off the motor
-     * @return [type] [description]
-     */
-    protected function turnOffMotor()
-    {
-        // echo "Turning Off Motor";
-        $this->motor_switch->setValue(PinInterface::VALUE_LOW);
-    }
-
-    /**
      * moves the motor by 1 step as per given values
-     * @param  [type] $w1 [description]
-     * @param  [type] $w2 [description]
-     * @param  [type] $w3 [description]
-     * @param  [type] $w4 [description]
-     * @return [type]     [description]
+     * @param $w1
+     * @param $w2
+     * @param $w3
+     * @param $w4
+     * @internal param $ [type] $w1 [description]
+     * @internal param $ [type] $w2 [description]
+     * @internal param $ [type] $w3 [description]
+     * @internal param $ [type] $w4 [description]
      */
     protected function moveStep($w1, $w2, $w3, $w4)
     {
@@ -98,56 +137,29 @@ class Stepper
     }
 
     /**
-     * prepares the set sequence for the stepper motor 28BYJ48
+     * turns off the motor
      */
-    protected function setPhaseSequences()
+    protected function turnOffMotor()
     {
-        $phase_sequence = [];
-        $phase_sequence[0] = [PinInterface::VALUE_LOW, PinInterface::VALUE_HIGH,PinInterface::VALUE_LOW, PinInterface::VALUE_LOW] ;
-        $phase_sequence[1] = [PinInterface::VALUE_LOW, PinInterface::VALUE_HIGH,PinInterface::VALUE_LOW, PinInterface::VALUE_HIGH];
-        $phase_sequence[2] = [PinInterface::VALUE_LOW, PinInterface::VALUE_LOW, PinInterface::VALUE_LOW, PinInterface::VALUE_HIGH];
-        $phase_sequence[3] = [PinInterface::VALUE_HIGH,PinInterface::VALUE_LOW, PinInterface::VALUE_LOW, PinInterface::VALUE_HIGH];
-        $phase_sequence[4] = [PinInterface::VALUE_HIGH,PinInterface::VALUE_LOW, PinInterface::VALUE_LOW, PinInterface::VALUE_LOW] ;
-        $phase_sequence[5] = [PinInterface::VALUE_HIGH,PinInterface::VALUE_LOW, PinInterface::VALUE_HIGH,PinInterface::VALUE_LOW] ;
-        $phase_sequence[6] = [PinInterface::VALUE_LOW, PinInterface::VALUE_LOW, PinInterface::VALUE_HIGH,PinInterface::VALUE_LOW] ;
-        $phase_sequence[7] = [PinInterface::VALUE_LOW, PinInterface::VALUE_HIGH,PinInterface::VALUE_HIGH,PinInterface::VALUE_LOW] ;
-
-        return $phase_sequence;
-    }
-
-    /**
-     * rotates the motor clock wise
-     * @return [type] [description]
-     */
-    public function rotateClockwise()
-    {
-        $this->turnOnMotor();
-        for ($step=0; $step < $this->getStepsToMove(); $step++) {
-            for ($local_step_count=0; $local_step_count <= $this->step_count ; $local_step_count++) {
-                $this->moveStep($this->phase_sequence[$this->current_phase][0], $this->phase_sequence[$this->current_phase][1], $this->phase_sequence[$this->current_phase][2], $this->phase_sequence[$this->current_phase][3]);
-
-                $this->current_phase -= 1;
-                if($this->current_phase < 0)
-                    $this->current_phase = 7;
-                usleep($this->delay);
-            }
-        }
-        $this->turnOffMotor();
+        // echo "Turning Off Motor";
+        $this->motor_switch->setValue(0);
     }
 
     /**
      * rotates the motor anti clock wise
-     * @return [type] [description]
      */
     public function rotateAntiClockwise()
     {
         $this->turnOnMotor();
-        for ($step=0; $step < $this->getStepsToMove(); $step++) {
-            for ($local_step_count=0; $local_step_count <= $this->step_count ; $local_step_count++) {
-                $this->moveStep($this->phase_sequence[$this->current_phase][0], $this->phase_sequence[$this->current_phase][1], $this->phase_sequence[$this->current_phase][2], $this->phase_sequence[$this->current_phase][3]);
+        for ($step = 0; $step < $this->getStepsToMove(); $step++) {
+            for ($local_step_count = 0; $local_step_count <= $this->step_count; $local_step_count++) {
+                $this->moveStep($this->phase_sequence[$this->current_phase][0],
+                    $this->phase_sequence[$this->current_phase][1], $this->phase_sequence[$this->current_phase][2],
+                    $this->phase_sequence[$this->current_phase][3]);
                 $this->current_phase += 1;
-                if($this->current_phase > 7)
+                if ($this->current_phase > 7) {
                     $this->current_phase = 0;
+                }
                 usleep($this->delay);
             }
         }

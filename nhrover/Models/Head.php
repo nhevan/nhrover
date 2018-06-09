@@ -8,6 +8,7 @@ use NHRover\Contracts\LoggerInterface;
 use NHRover\Contracts\PinInterface;
 use NHRover\Contracts\RoverHead;
 use NHRover\Contracts\ServoInterface;
+use NHRover\Contracts\TiltingInterface;
 
 /**
  * Class Head
@@ -28,7 +29,7 @@ class Head implements RoverHead
     /**
      * @var ServoInterface
      */
-    private $tilting_servo;
+    private $tilting_motor;
     /**
      * @var PinInterface
      */
@@ -37,13 +38,13 @@ class Head implements RoverHead
     function __construct(
         LoggerInterface $logger,
         ServoInterface $panning_servo,
-        ServoInterface $tilting_servo,
+        TiltingInterface $tilt_motor,
         PinInterface $headlight
     ) {
         $this->log = $logger;
         $this->log->info("Attaching Head ...");
         $this->panning_servo = $panning_servo;
-        $this->tilting_servo = $tilting_servo;
+        $this->tilting_motor = $tilt_motor;
         $this->headlight = $headlight;
         $this->headlight->setMode('output');
     }
@@ -53,21 +54,20 @@ class Head implements RoverHead
         $this->log->info("Looking straight ...");
 
         $this->panning_servo->gotoMid();
-        $this->tilting_servo->gotoMid();
     }
 
     public function lookUp()
     {
         $this->log->info("Looking up ...");
 
-        $this->tilting_servo->gotoMax();
+        $this->tilting_motor->tiltUp();
     }
 
     public function lookDown()
     {
         $this->log->info("Looking down...");
 
-        $this->tilting_servo->gotoMin();
+        $this->tilting_motor->tiltDown();
     }
 
     public function lookLeft()

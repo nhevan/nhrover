@@ -2,10 +2,12 @@
 
 namespace Test;
 
+use NHRover\Contracts\TiltingInterface;
 use NHRover\Models\Head;
 use NHRover\Models\OnScreenLogger;
 use NHRover\Models\Pin;
 use NHRover\Models\Servo;
+use NHRover\Models\StepperTilt;
 use PHPUnit\Framework\TestCase;
 
 class HeadTest extends TestCase
@@ -22,9 +24,9 @@ class HeadTest extends TestCase
 
         $headlight = $this->createMock(Pin::class);
 
-        $tilting_servo = $this->createMock(Servo::class);
+        $tilting_motor = $this->createMock(StepperTilt::class);
 
-        $head = new Head(new OnScreenLogger(), $panning_servo, $tilting_servo, $headlight);
+        $head = new Head(new OnScreenLogger(), $panning_servo, $tilting_motor, $headlight);
 
         //act
         $head->lookLeft();
@@ -41,9 +43,9 @@ class HeadTest extends TestCase
         $panning_servo->expects($this->once())->method('gotoMax');
         $headlight = $this->createMock(Pin::class);
 
-        $tilting_servo = $this->createMock(Servo::class);
+        $tilting_motor = $this->createMock(StepperTilt::class);
 
-        $head = new Head(new OnScreenLogger(), $panning_servo, $tilting_servo, $headlight);
+        $head = new Head(new OnScreenLogger(), $panning_servo, $tilting_motor, $headlight);
 
         //act
         $head->lookRight();
@@ -56,12 +58,12 @@ class HeadTest extends TestCase
     public function it_can_look_down()
     {
         //arrange
-        $tilting_servo = $this->createMock(Servo::class);
-        $tilting_servo->expects($this->once())->method('gotoMin');
+        $tilting_motor = $this->createMock(StepperTilt::class);
+        $tilting_motor->expects($this->once())->method('tiltDown');
         $headlight = $this->createMock(Pin::class);
 
         $panning_servo = $this->createMock(Servo::class);
-        $head = new Head(new OnScreenLogger(), $panning_servo, $tilting_servo, $headlight);
+        $head = new Head(new OnScreenLogger(), $panning_servo, $tilting_motor, $headlight);
 
         //act
         $head->lookDown();
@@ -74,12 +76,12 @@ class HeadTest extends TestCase
     public function it_can_look_up()
     {
         //arrange
-        $tilting_servo = $this->createMock(Servo::class);
-        $tilting_servo->expects($this->once())->method('gotoMax');
+        $tilting_motor = $this->createMock(StepperTilt::class);
+        $tilting_motor->expects($this->once())->method('tiltUp');
         $headlight = $this->createMock(Pin::class);
 
         $panning_servo = $this->createMock(Servo::class);
-        $head = new Head(new OnScreenLogger(), $panning_servo, $tilting_servo, $headlight);
+        $head = new Head(new OnScreenLogger(), $panning_servo, $tilting_motor, $headlight);
 
         //act
         $head->lookUp();
@@ -92,14 +94,13 @@ class HeadTest extends TestCase
     public function it_can_look_straight_forward()
     {
         //arrange
-        $tilting_servo = $this->createMock(Servo::class);
-        $tilting_servo->expects($this->once())->method('gotoMid');
+        $tilting_motor = $this->createMock(TiltingInterface::class);
         $headlight = $this->createMock(Pin::class);
 
         $panning_servo = $this->createMock(Servo::class);
         $panning_servo->expects($this->once())->method('gotoMid');
 
-        $head = new Head(new OnScreenLogger(), $panning_servo, $tilting_servo, $headlight);
+        $head = new Head(new OnScreenLogger(), $panning_servo, $tilting_motor, $headlight);
 
         //act
         $head->lookStraight();
@@ -112,11 +113,11 @@ class HeadTest extends TestCase
     public function it_can_toggle_its_headlight()
     {
         //arrange
-        $tilting_servo = $this->createMock(Servo::class);
+        $tilting_motor = $this->createMock(StepperTilt::class);
         $panning_servo = $this->createMock(Servo::class);
 
         $headlight = $this->createMock(Pin::class);
-        $head = new Head(new OnScreenLogger(), $panning_servo, $tilting_servo, $headlight);
+        $head = new Head(new OnScreenLogger(), $panning_servo, $tilting_motor, $headlight);
 
         //act
         $headlight->expects($this->once())->method('setValue')->with(1);

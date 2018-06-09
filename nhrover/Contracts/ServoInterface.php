@@ -10,8 +10,6 @@ namespace NHRover\Contracts;
  */
 interface ServoInterface
 {
-    public function __construct(PinInterface $pin);
-
     /**
      * @return mixed
      */

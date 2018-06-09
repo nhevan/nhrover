@@ -16,7 +16,7 @@ class Stepper
     protected $current_phase = 0;
     protected $steps_to_move;
     protected $step_count = 1;
-    protected $delay = 1000; //in micro second
+    protected $delay = 5000; //in micro second
     protected $phase_sequence;
 
     public function __construct(
@@ -42,14 +42,14 @@ class Stepper
     protected function setPhaseSequences()
     {
         $phase_sequence = [];
-        $phase_sequence[0] = [0, 1, 0, 0];
-        $phase_sequence[1] = [0, 1, 0, 1];
-        $phase_sequence[2] = [0, 0, 0, 1];
-        $phase_sequence[3] = [1, 0, 0, 1];
-        $phase_sequence[4] = [1, 0, 0, 0];
-        $phase_sequence[5] = [1, 0, 1, 0];
-        $phase_sequence[6] = [0, 0, 1, 0];
-        $phase_sequence[7] = [0, 1, 1, 0];
+        $phase_sequence[0] = [1, 0, 0, 0];
+        $phase_sequence[1] = [1, 1, 0, 0];
+        $phase_sequence[2] = [0, 1, 0, 0];
+        $phase_sequence[3] = [0, 1, 1, 0];
+        $phase_sequence[4] = [0, 0, 1, 0];
+        $phase_sequence[5] = [0, 0, 1, 1];
+        $phase_sequence[6] = [0, 0, 0, 1];
+        $phase_sequence[7] = [1, 0, 0, 1];
 
         return $phase_sequence;
     }

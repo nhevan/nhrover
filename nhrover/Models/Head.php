@@ -84,12 +84,24 @@ class Head implements RoverHead
         $this->panning_servo->gotoMax();
     }
 
+    public function turnOnHeadlight()
+    {
+        return $this->headlight->setValue(1);
+    }
+
+    public function turnOffHeadlight()
+    {
+        return $this->headlight->setValue(0);
+    }
+
     public function toggleHeadlight()
     {
         $headlight = $this->headlight->getValue();
 
-        if ($headlight) return $this->headlight->setValue(0);
+        if ($headlight) {
+            return $this->turnOffHeadlight();
+        }
 
-        return $this->headlight->setValue(1);
+        return $this->turnOnHeadlight();
     }
 }

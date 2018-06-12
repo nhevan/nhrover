@@ -8,26 +8,30 @@ use NHRover\Models\Rover;
 use NHRover\Models\Servo;
 use NHRover\Models\StepperTilt;
 use NHRover\Models\WheelL293d;
+use Symfony\Component\Dotenv\Dotenv;
 
 require "bootstrap.php";
+
+$dotenv = new Dotenv();
+$dotenv->load(__DIR__.'/.env');
 
 $logger = new OnScreenLogger();
 $body = new Body(
             $logger,
-            new WheelL293d(new Pin(11),new Pin(5)),
-            new WheelL293d(new Pin(6),new Pin(13))
+            new WheelL293d(new Pin(getenv("BODY_LEFT_WHEEL_PIN_1")),new Pin(getenv("BODY_LEFT_WHEEL_PIN_2"))),
+            new WheelL293d(new Pin(getenv("BODY_RIGHT_WHEEL_PIN_1")),new Pin(getenv("BODY_RIGHT_WHEEL_PIN_2")))
         );
-$headlight_switch = new Pin(4);
+$headlight_switch = new Pin(getenv("HEADLIGHT_SWITCH"));
 $head = new Head(
             $logger,
-            new Servo(new Pin(18)),
+            new Servo(new Pin(24)),
             //new Servo(new Pin(4)),
             new StepperTilt(
-                new Pin(23),
-                new Pin(24),
-                new Pin(25),
-                new Pin(12),
-                new Pin(16)
+                new Pin(getenv("TILT_STEPPER_SWITCH")),
+                new Pin(getenv("TILT_STEPPER_INPUT_1")),
+                new Pin(getenv("TILT_STEPPER_INPUT_2")),
+                new Pin(getenv("TILT_STEPPER_INPUT_3")),
+                new Pin(getenv("TILT_STEPPER_INPUT_4"))
             ),
             $headlight_switch
         );

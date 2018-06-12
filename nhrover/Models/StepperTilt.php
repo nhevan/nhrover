@@ -30,14 +30,18 @@ class StepperTilt extends Stepper implements TiltingInterface
 
     public function tiltUp()
     {
+        $this->motor_switch->setValue(1);
         $this->setStepsToMove(128);
         $this->rotateClockwise();
+        $this->motor_switch->setValue(0);
     }
 
     public function tiltDown()
     {
+        $this->motor_switch->setValue(1);
         $this->setStepsToMove(128);
         $this->rotateAntiClockwise();
+        $this->motor_switch->setValue(0);
     }
 
 }

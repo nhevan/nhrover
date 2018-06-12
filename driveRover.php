@@ -15,9 +15,9 @@ $logger = new OnScreenLogger();
 $body = new Body(
             $logger,
             new WheelL293d(new Pin(11),new Pin(5)),
-            new WheelL293d(new Pin(6),new Pin(13)),
-            new Pin(2)
+            new WheelL293d(new Pin(6),new Pin(13))
         );
+$headlight_switch = new Pin(4);
 $head = new Head(
             $logger,
             new Servo(new Pin(18)),
@@ -29,7 +29,7 @@ $head = new Head(
                 new Pin(12),
                 new Pin(16)
             ),
-            new Pin(4)
+            $headlight_switch
         );
 $nhrover = new Rover($body, $head, $logger);
 

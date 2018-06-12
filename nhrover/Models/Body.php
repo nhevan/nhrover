@@ -33,7 +33,7 @@ class Body implements RoverBody
      */
     private $motor_power;
 
-    function __construct(LoggerInterface $logger, WheelInterface $left_wheel, WheelInterface $right_wheel, PinInterface $motor_power)
+    function __construct(LoggerInterface $logger, WheelInterface $left_wheel, WheelInterface $right_wheel, PinInterface $motor_power = null)
     {
         $this->log = $logger;
         $this->log->info("Attaching Body ...");
@@ -41,7 +41,8 @@ class Body implements RoverBody
         $this->left_side = $left_wheel;
         $this->right_side = $right_wheel;
         $this->motor_power = $motor_power;
-        $this->motor_power->setMode('output');
+        if ($this->motor_power)
+            $this->motor_power->setMode('output');
     }
 
     public function moveForward()
@@ -89,7 +90,8 @@ class Body implements RoverBody
      */
     public function powerUp()
     {
-        $this->motor_power->setValue(1);
+        if ($this->motor_power)
+            $this->motor_power->setValue(1);
     }
 
     /**
@@ -97,6 +99,7 @@ class Body implements RoverBody
      */
     public function powerDown()
     {
-        $this->motor_power->setValue(0);
+        if ($this->motor_power)
+            $this->motor_power->setValue(0);
     }
 }
